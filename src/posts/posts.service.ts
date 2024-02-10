@@ -22,7 +22,22 @@ export class PostsService {
   }
   async listPosts() {
     try {
-      return await this.postModel.find().sort().exec();
+      const posts: any = await this.postModel
+        .find()
+        .populate(['user', 'company', 'complaint'])
+        .exec();
+      console.log('posts', posts);
+      const promises = await Promise.all(
+        await posts.map(async (post) => {
+          if (post.repost === null) return post.repost;
+          const reposts = await this.postModel.findById(post.repost);
+          return reposts;
+        }),
+      );
+      for (let i = 0; i < posts.length; i++) {
+        posts[i].repost = promises[i];
+      }
+      return posts;
     } catch (error) {
       console.error(error);
       throw new InternalServerErrorException('Something went wrong');

@@ -22,7 +22,7 @@ export class Post {
   @Prop({ type: mongoose.Types.ObjectId, ref: 'Post', default: null })
   repost: string;
 
-  @Prop({ type: String })
+  @Prop({ type: String, default: null })
   remarks: string;
 }
 
