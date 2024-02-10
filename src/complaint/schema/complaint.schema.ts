@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { time } from 'console';
 import { HydratedDocument } from 'mongoose';
 import * as mongoose from 'mongoose';
 
@@ -9,8 +10,10 @@ export class File {
   path: string;
   type: string;
 }
-@Schema()
+@Schema({ timestamps: true })
 export class Complaint {
+  @Prop({ enum: ['APP', 'TWITTER'] })
+  source: string;
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: string;
 
@@ -25,9 +28,6 @@ export class Complaint {
 
   @Prop()
   title: string;
-
-  @Prop({ type: Date, default: Date.now() })
-  createdAt: Date;
 
   @Prop({ default: [] })
   files: String[];
