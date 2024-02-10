@@ -9,12 +9,14 @@ import { ComplaintModule } from './complaint/complaint.module';
 import { CommunityModule } from './community/community.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { OrganizationModule } from './organization/organization.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
     ServeStaticModule.forRoot({
+      serveRoot: '/static',
       rootPath: join(__dirname, '..', 'static'),
     }),
     MongooseModule.forRoot('mongodb://db:27017/test'),
@@ -22,6 +24,7 @@ import { join } from 'path';
     PostsModule,
     ComplaintModule,
     CommunityModule,
+    OrganizationModule,
   ],
   controllers: [AppController],
   providers: [AppService],

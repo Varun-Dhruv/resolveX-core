@@ -18,16 +18,16 @@ export class Complaint {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: string;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Compnany' })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Company' })
   company: string;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Organization' })
   organization: string;
 
-  @Prop()
+  @Prop({ default: '' })
   subject: string;
 
-  @Prop()
+  @Prop({ default: '' })
   title: string;
 
   @Prop({ default: [] })

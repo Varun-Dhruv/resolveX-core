@@ -6,6 +6,10 @@ export type CommunityDocument = HydratedDocument<Community>;
 export class Community {
   @Prop()
   name: string;
+
+  @Prop()
+  image: string;
+
   @Prop()
   description: string;
 
