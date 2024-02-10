@@ -13,3 +13,8 @@ export class UserRegisterDto {
   @IsString()
   image: string;
 }
+export class VerifyUser {
+  @IsString()
+  @IsNotEmpty()
+  email: string;
+}

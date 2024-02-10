@@ -11,7 +11,7 @@ import { Model } from 'mongoose';
 import { MongoServerError, ObjectId } from 'mongodb';
 import { InjectModel } from '@nestjs/mongoose';
 import * as crypto from 'crypto';
-import { UserRegisterDto } from './dto/auth.dto';
+import { UserRegisterDto, VerifyUser } from './dto/auth.dto';
 @Injectable()
 export class UserService {
   constructor(
@@ -57,7 +57,15 @@ export class UserService {
     // implementation
   }
 
-  async signToken(userId: ObjectId, email: string): Promise<string> {
+  async verify(body: VerifyUser): Promise<boolean> {
+    const user = await this.userModel.findOne({ email: body.email });
+    if (!user) {
+      return false;
+    }
+    return true;
+  }
+
+  private async signToken(userId: ObjectId, email: string): Promise<string> {
     const payload = {
       sub: userId,
       email: email,

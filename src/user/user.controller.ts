@@ -13,4 +13,10 @@ export class UserController {
   async auth(@ValidBody() userRegisterDto: UserRegisterDto) {
     return await this.userService.register(userRegisterDto);
   }
+  @Post('verify')
+  async verify(
+    @ValidBody() userRegisterDto: UserRegisterDto,
+  ): Promise<boolean> {
+    return await this.userService.verify(userRegisterDto);
+  }
 }
