@@ -22,6 +22,9 @@ export class User {
   @Prop({ default: null })
   DOB: string;
 
+  @Prop({ default: 'USER', enum: ['USER', 'COMPANY'] })
+  role: string;
+
   @Prop()
   publicKey: string;
 

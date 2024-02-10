@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  ForbiddenException,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as argon from 'argon2';
 import { JwtService } from '@nestjs/jwt';
@@ -20,7 +16,7 @@ export class UserService {
     private jwtService: JwtService,
   ) {}
 
-  async register(body: UserRegisterDto) {
+  async register(body: any) {
     try {
       const user: UserDocument = await this.userModel.findOne({
         email: body.email,
@@ -29,10 +25,10 @@ export class UserService {
         return {
           user,
           created: false,
+          role: user.role,
           token: await this.signToken(user._id, user.email),
         };
       }
-
       var prime_length = 1000;
       var diffHell = crypto.createDiffieHellman(prime_length);
       diffHell.generateKeys('base64');
@@ -40,6 +36,7 @@ export class UserService {
         name: body.name,
         email: body.email,
         image: body.image,
+        role: body.role.toUpperCase() || 'USER',
         publicKey: diffHell.getPublicKey('base64'),
         privateKey: diffHell.getPrivateKey('base64'),
       });
@@ -57,12 +54,12 @@ export class UserService {
     // implementation
   }
 
-  async verify(body: VerifyUser): Promise<boolean> {
+  async verify(body: VerifyUser): Promise<{ exists: boolean }> {
     const user = await this.userModel.findOne({ email: body.email });
     if (!user) {
-      return false;
+      return { exists: false };
     }
-    return true;
+    return { exists: true };
   }
 
   private async signToken(userId: ObjectId, email: string): Promise<string> {
