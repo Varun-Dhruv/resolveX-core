@@ -11,12 +11,18 @@ export class ComplaintService {
     private complaintModel: Model<ComplaintDocument>,
   ) {}
   createComplaint(complaint: any, user, files) {
-    const filePaths = files.file.map((file) => {
-      return storeFile(file);
-    });
+    let filePaths = [];
+    if (files?.file) {
+      filePaths = files.file.map((file) => {
+        return storeFile(file);
+      });
+    } else {
+      filePaths = [];
+    }
     if (user.role === 'USER') {
       complaint.user = user._id;
       const Complaint = new this.complaintModel({
+        source: 'APP',
         user: user._id,
         subject: complaint.subject,
         title: complaint.title,
