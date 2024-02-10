@@ -41,7 +41,9 @@ export class ComplaintController {
 
   @Get('/user')
   @UseGuards(JwtGuard)
-  listComplaintsByUser(@GetUser() user: User) {
+  listComplaintsByUser(@GetUser() user: any) {
+    if (user.registrationNumber) user.role = 'COMPANY';
+    else user.role = 'USER';
     return this.complaintService.listComplaintsByUser(user);
   }
 }

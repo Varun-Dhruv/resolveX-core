@@ -49,13 +49,13 @@ export class ComplaintService {
   }
 
   async listComplaints() {
-    return await this.complaintModel.find();
+    return await this.complaintModel.find().populate('user');
   }
 
   async listComplaintsByUser(user) {
     if (user.role === 'USER')
-      return this.complaintModel.find({ user: user._id });
+      return this.complaintModel.find({ user: user._id }).populate('user');
     if (user.role === 'COMPANY')
-      return this.complaintModel.find({ company: user._id });
+      return this.complaintModel.find({ company: user._id }).populate('user');
   }
 }
