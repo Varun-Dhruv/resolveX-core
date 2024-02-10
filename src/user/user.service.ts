@@ -18,14 +18,20 @@ export class UserService {
     private jwtService: JwtService,
   ) {}
 
-  private checkUserType(email: string): string {
+  private checkUserType(email: string): { role: string; type: string } {
+    if (
+      email === 'dpatel4212@gmail.com' ||
+      email === 'rupin.malik@spit.ac.in' ||
+      email === 'pratikpujari2019@gmail.com'
+    )
+      return { role: 'COMPANY', type: 'NGO' };
     if (email.split('@')[1] === 'spit.ac.in') {
-      return 'COMPANY';
-    } else return 'USER';
+      return { role: 'COMPANY', type: 'PRIVATE' };
+    } else return { role: 'USER', type: '' };
   }
   async register(body: any) {
     try {
-      if (this.checkUserType(body.email) === 'USER') {
+      if (this.checkUserType(body.email).role === 'USER') {
         const user: UserDocument = await this.userModel.findOne({
           email: body.email,
         });
@@ -61,7 +67,7 @@ export class UserService {
           return {
             created: false,
             company,
-            role: 'COMPANY',
+            role: company.type === 'NGO' ? 'NGO' : 'COMPANY',
             token: await this.signToken(company._id, company.email),
           };
         }
@@ -70,13 +76,14 @@ export class UserService {
           name: body.name,
           image: body.image,
           registrationNumber: body.registrationNumber,
+          type: this.checkUserType(body.email).type,
           authorized: false,
         });
         await newCompany.save();
         return {
           created: true,
           company: newCompany,
-          role: 'COMPANY',
+          role: newCompany.type === 'NGO' ? 'NGO' : 'COMPANY',
           token: await this.signToken(newCompany._id, newCompany.email),
         };
       }

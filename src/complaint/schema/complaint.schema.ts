@@ -14,6 +14,7 @@ export class File {
 export class Complaint {
   @Prop({ enum: ['APP', 'TWITTER'] })
   source: string;
+
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: string;
 

@@ -5,6 +5,9 @@ export type CompanyDocument = HydratedDocument<Company>;
 
 @Schema()
 export class Company {
+  @Prop({ type: String, required: true, enum: ['PRIVATE', 'NGO'] })
+  type: string;
+
   @Prop({ type: String, required: true })
   email: string;
 
