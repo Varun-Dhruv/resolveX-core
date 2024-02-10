@@ -1,0 +1,30 @@
+version: '3.0'
+volumes:
+  db_data:
+    driver: local
+services:
+  rx-core:
+    image: varun100000/rx-core:latest
+    command: ['sh', '-c', 'yarn start:dev']
+    container_name: rx-core
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8000:8000'
+    env_file:
+      - ./envs/.env.local
+    depends_on:
+      - db
+    volumes:
+      - ./src:/code/src
+      - ./static:/code/static
+  db:
+    image: mongo
+    container_name: rx-mongo
+    ports:
+      - '27017:27017'
+    env_file:
+      - ./envs/.env.local
+    volumes:
+      - db_data:/data/db
