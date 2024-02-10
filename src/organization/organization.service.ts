@@ -23,13 +23,13 @@ export class OrganizationService {
         };
       } else {
         const imagePath = storeFile(file);
-        console.log(imagePath);
+
         const newOrganization = await new this.organizationModel({
           name: body.name,
           email: body.email,
           image: imagePath,
         }).save();
-        console.log(newOrganization);
+
         return {
           created: true,
           organization: newOrganization,

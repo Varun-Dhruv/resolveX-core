@@ -13,6 +13,7 @@ export class CommunityService {
   ) {}
   async createCommunity(data: any, files) {
     const filePath = storeFile(files);
+
     const newCommunity = new this.communityModel({
       name: data.name,
       image: filePath,

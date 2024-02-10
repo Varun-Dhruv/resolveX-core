@@ -2,13 +2,13 @@ import {
   Controller,
   Get,
   Post,
-  UploadedFile,
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
 import { CommunityService } from './community.service';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { ValidBody } from 'src/utils/valid-body.decorator';
+import { ParseJsonPipe } from 'src/utils/parse-json.pipe';
 
 @Controller('community')
 export class CommunityController {
@@ -16,7 +16,11 @@ export class CommunityController {
 
   @Post('/create')
   @UseInterceptors(FileFieldsInterceptor([{ name: 'file', maxCount: 1 }]))
-  createCommunity(@ValidBody() data: any, @UploadedFiles() files: any) {
+  createCommunity(
+    @ValidBody('data', new ParseJsonPipe())
+    data: any,
+    @UploadedFiles() files: any,
+  ) {
     return this.communityService.createCommunity(data, files.file[0]);
   }
 

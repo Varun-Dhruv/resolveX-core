@@ -1,16 +1,16 @@
-import { Prop, Schema } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
 
 export type CommunityDocument = HydratedDocument<Community>;
 @Schema()
 export class Community {
-  @Prop()
+  @Prop({ type: String })
   name: string;
 
-  @Prop()
+  @Prop({ type: String })
   image: string;
 
-  @Prop()
+  @Prop({ type: String })
   description: string;
 
   @Prop({ type: mongoose.Types.ObjectId, ref: 'User' })
@@ -20,4 +20,4 @@ export class Community {
   posts: string[];
 }
 
-export const CommunitySchema = new mongoose.Schema(Community);
+export const CommunitySchema = SchemaFactory.createForClass(Community);

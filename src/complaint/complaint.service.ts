@@ -28,7 +28,7 @@ export class ComplaintService {
         title: complaint.title,
         files: filePaths,
         details: complaint.details,
-        type: complaint.type,
+        type: complaint.type ? complaint.type : 'private',
       });
       Complaint.save();
     }
@@ -41,7 +41,7 @@ export class ComplaintService {
         title: complaint.title,
         files: filePaths,
         details: complaint.details,
-        type: complaint.type,
+        type: complaint.type ? complaint.type : 'private',
       });
       Complaint.save();
     }
