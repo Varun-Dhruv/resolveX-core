@@ -52,6 +52,14 @@ export class ComplaintService {
     return await this.complaintModel.find().populate('user');
   }
 
+  async updateComplaintStatus(complaintId, status) {
+    return await this.complaintModel.findByIdAndUpdate(
+      complaintId,
+      { status: status },
+      { new: true },
+    );
+  }
+
   async listComplaintsByUser(user) {
     if (user.role === 'USER')
       return this.complaintModel.find({ user: user._id }).populate('user');

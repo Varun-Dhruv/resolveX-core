@@ -2,6 +2,8 @@ import {
   Body,
   Controller,
   Get,
+  Param,
+  Patch,
   Post,
   UploadedFiles,
   UseGuards,
@@ -45,5 +47,10 @@ export class ComplaintController {
     if (user.registrationNumber) user.role = 'COMPANY';
     else user.role = 'USER';
     return this.complaintService.listComplaintsByUser(user);
+  }
+
+  @Patch('/:id')
+  setComplaintStatus(@Body('status') status: string, @Param('id') id: string) {
+    return this.complaintService.updateComplaintStatus(id, status);
   }
 }
