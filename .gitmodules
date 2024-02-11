@@ -1,0 +1,3 @@
+[submodule "resolveX-dashboard"]
+	path = resolveX-dashboard
+	url = https://github.com/Varun-Dhruv/resolveX-dashboard
