@@ -14,6 +14,7 @@ import { ValidBody } from 'src/utils/valid-body.decorator';
 import { PostsService } from './posts.service';
 import { JwtGuard } from 'src/user/auth.guard';
 import { GetUser } from 'src/user/get-user.decorator';
+import * as mongoose from 'mongoose';
 
 @Controller('posts')
 export class PostsController {

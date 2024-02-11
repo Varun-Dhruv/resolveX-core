@@ -4,11 +4,8 @@ import mongoose, { HydratedDocument } from 'mongoose';
 export type PostDocument = HydratedDocument<Post>;
 @Schema({ timestamps: true })
 export class Post {
-  @Prop({ type: String, default: null })
+  @Prop({ type: mongoose.Types.ObjectId, default: null })
   user: string;
-
-  @Prop({ type: mongoose.Types.ObjectId, ref: 'Company', default: null })
-  company: string;
 
   @Prop({ type: String, enum: ['REPOST', 'COMPLAINTS', 'DIRECT_POST'] })
   type: string;

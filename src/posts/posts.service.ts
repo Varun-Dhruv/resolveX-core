@@ -24,9 +24,8 @@ export class PostsService {
     try {
       const posts: any = await this.postModel
         .find()
-        .populate(['user', 'company', 'complaint'])
+        .populate(['user', 'complaint'])
         .exec();
-      console.log('posts', posts);
       const promises = await Promise.all(
         await posts.map(async (post) => {
           if (post.repost === null) return post.repost;
